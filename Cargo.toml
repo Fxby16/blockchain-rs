@@ -8,3 +8,7 @@ sha2 = "0.10"
 ed25519-dalek = { version = "2.1.1", features = ["rand_core"] }
 rand = "0.8"
 hex = "0.4"
+sqlx = { version = "0.7", features = [ "sqlite", "runtime-tokio-native-tls" ] }
+tokio = { version = "1", features = ["full"] }
+eframe = "0.31.1"
+num-bigint = "0.4.6"

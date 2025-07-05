@@ -2,25 +2,35 @@ use ed25519_dalek::Signature;
 
 #[derive(Debug)]
 pub struct Transaction{
-    sender : String,
-    receiver : String,
-    amount : f32,
-    fee : f32,
-    signature : Option<Signature>
+    sender: String,
+    receiver: String,
+    amount: f32,
+    fee: f32,
+    signature: Option<Signature>
 }
 
 impl Transaction {
+    pub fn default() -> Self { 
+        Self {
+            sender: String::new(),
+            receiver: String::new(),
+            amount: 0.0,
+            fee: 0.0,
+            signature: None
+        }
+    }
+
     pub fn new(sender: String, receiver: String, amount: f32, fee: f32) -> Self {
-        Transaction {
+        Self {
             sender,
             receiver,
             amount,
             fee,
-            signature : None
+            signature: None
         }
     }
 
-    pub fn set_signature(&mut self, signature : Signature) {
+    pub fn set_signature(&mut self, signature: Signature) {
         let _ = self.signature.insert(signature);
     }
 

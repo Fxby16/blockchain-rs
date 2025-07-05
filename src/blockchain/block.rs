@@ -2,20 +2,20 @@ use crate::blockchain::transactions::Transaction;
 use crate::blockchain::timestamp::get_timestamp;
 
 pub struct Block {
-    index : u32,
-    timestamp : u64,
-    prev_hash : String,
-    transactions : Vec<Transaction>,
-    nonce : u32,
-    hash : String
+    height: u64,
+    timestamp: u64,
+    prev_hash: String,
+    transactions: Vec<Transaction>,
+    nonce: u32,
+    hash: String
 }
 
 impl Block {
-    pub fn new(index: u32, prev_hash : String, transactions : Vec<Transaction>) -> Self {
+    pub fn new(height: u64, prev_hash: String, transactions: Vec<Transaction>) -> Self {
         let timestamp = get_timestamp();
         
         Block {
-            index,
+            height,
             timestamp,
             prev_hash,
             transactions,
@@ -24,7 +24,7 @@ impl Block {
         }
     }
 
-    pub fn set_hash(&mut self, hash : String) {
+    pub fn set_hash(&mut self, hash: String) {
         self.hash = hash;
     }
 
@@ -32,14 +32,22 @@ impl Block {
         &self.hash
     }
 
+    pub fn get_prev_hash(&self) -> &String {
+        &self.prev_hash
+    }
+
     pub fn get_transactions(&self) -> &Vec<Transaction> {
         &self.transactions
     }
 
+    pub fn inc_nonce(&mut self) {
+        self.nonce += 1;
+    }
+
     pub fn serialize(&self) -> String {
         format!(
-            "{{\"index\":{},\"timestamp\":{},\"prev_hash\":\"{}\",\"transactions\":[{}],\"nonce\":{}}}",
-            self.index,
+            "{{\"height\":{},\"timestamp\":{},\"prev_hash\":\"{}\",\"transactions\":[{}],\"nonce\":{}}}",
+            self.height,
             self.timestamp,
             self.prev_hash,
             self.transactions.iter().map(|tx| tx.serialize()).collect::<Vec<_>>().join(","),
